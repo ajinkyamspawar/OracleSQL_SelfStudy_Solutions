@@ -1,0 +1,347 @@
+Day1: Practise of Day 1 of class session: 
+
+
+1) Table Creation 
+CREATE TABLE EMP 
+( EMPID number(2),
+  EMPNAME varchar2(20),
+  SALARY 	number(10)
+);
+
+
+
+
+2) Inserting values in table
+
+INSERT INTO EMP
+VALUES(1,'MSP', 250000);
+
+INSERT INTO EMP
+VALUES(2, 'SMP', 250000);
+
+INSERT INTO EMP
+VALUES(3, 'DrAMP', 250000);
+
+INSERT INTO EMP
+VALUES(4, 'AMP', 200);
+
+
+
+
+3) Shooting a query to find out name of an employee 
+ SELECT EMPNAME FROM EMP WHERE EMPID = 3;
+
+EMPNAME
+--------------------
+DrAMP
+
+
+
+
+4) Shooting a query to find out salary of an employee
+SELECT SALARY FROM EMP WHERE EMPNAME = 'MSP';
+
+    SALARY
+----------
+    250000
+
+
+
+5) Inserting and deleting a new row
+INSERT INTO EMP VALUES(5,'XYZ', 340509);
+
+1 row created.
+
+SQL> SELECT * FROM EMP;
+
+     EMPID EMPNAME                  SALARY
+---------- -------------------- ----------
+         1 MSP                      250000
+         2 SMP                      250000
+         3 DrAMP                    250000
+         4 AMP                         200
+         5 XYZ                      340509
+
+SQL> DELETE FROM EMP WHERE EMPNAME = 'XYZ';
+
+1 row deleted.
+
+SQL> SELECT * FROM EMP;
+
+     EMPID EMPNAME                  SALARY
+---------- -------------------- ----------
+         1 MSP                      250000
+         2 SMP                      250000
+         3 DrAMP                    250000
+         4 AMP                         200
+
+
+
+
+6) Describing the table structure 
+ DESC EMP
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ EMPID                                              NUMBER(2)
+ EMPNAME                                            VARCHAR2(20)
+ SALARY                                             NUMBER(10)
+
+
+
+
+7) Inserting only two values in a table
+INSERT INTO EMP (EMPID, EMPNAME) VALUES(5,'XYZ');
+
+1 row created.
+
+SQL> SELECT * FROM EMP;
+
+     EMPID EMPNAME                  SALARY
+---------- -------------------- ----------
+         1 MSP                      250000
+         2 SMP                      250000
+         3 DrAMP                    250000
+         4 AMP                         200
+         5 XYZ
+
+
+
+
+8) Fetching names from EMP 
+SELECT EMPNAME FROM EMP;
+
+EMPNAME
+--------------------
+MSP
+SMP
+DrAMP
+AMP
+XYZ
+
+SQL> SELECT EMPNAME FROM EMP /*Not it doesn't work in this way in SQl*/
+  2  WHERE 'S' IN EMPNAME;
+
+no rows selected
+
+SQL> SELECT EMPNAME FROM EMP WHERE 'SMP' IN EMPNAME;
+
+EMPNAME
+--------------------
+SMP
+
+ SELECT EMPNAME FROM EMP WHERE EMPNAME = 'MSP';
+
+EMPNAME
+--------------------
+MSP
+
+
+
+
+
+9) Not storing a new data in column but displaying it
+SELECT EMPID, EMPNAME, SALARY, EMPID+SALARY
+FROM EMP;
+EMPID EMPNAME                  SALARY EMPID+SALARY
+---------- -------------------- ---------- ------------
+         1 MSP                      250000       250001
+         2 SMP                      250000       250002
+         3 DrAMP                    250000       250003
+         4 AMP                         200          204
+         5 XYZ
+	/*Note: As XYZ dont have any salary, the EMPID+SALARY did not show up*/
+
+
+SELECT * FROM EMP;
+
+     EMPID EMPNAME                  SALARY
+---------- -------------------- ----------
+         1 MSP                      250000
+         2 SMP                      250000
+         3 DrAMP                    250000
+         4 AMP                         200
+         5 XYZ
+
+
+
+
+
+10)Giving a different name to column 
+SELECT EMPID, EMPNAME, SALARY, EMPID+SALARY"EIDSALARY"
+FROM EMP;
+
+
+     EMPID EMPNAME                  SALARY  EIDSALARY /*NOTE: ONLY alias name is displayed" 
+---------- -------------------- ---------- ----------
+         1 MSP                      250000     250001
+         2 SMP                      250000     250002
+         3 DrAMP                    250000     250003
+         4 AMP                         200        204
+         5 XYZ
+
+
+
+
+
+
+
+11) UPDATE CLAUSE OPERATIONS:
+UPDATE EMP SET SALARY = 100000
+  2  WHERE EMPNAME = 'XYZ';
+
+1 row updated.
+
+SQL> SELECT * FROM EMP;
+
+     EMPID EMPNAME                  SALARY
+---------- -------------------- ----------
+         1 MSP                      250000
+         2 SMP                      250000
+         3 DrAMP                    250000
+         4 AMP                         200
+         5 XYZ                      100000
+
+
+
+
+
+
+12) ALTER CLAUSE: ALTERS STRUCTURE OF A TABLE: 
+
+ALTER TABLE EMP 
+ADD LEAVE_TAKEN number(2);
+
+     EMPID EMPNAME                  SALARY LEAVE_TAKEN
+---------- -------------------- ---------- -----------
+         1 MSP                      250000
+         2 SMP                      250000
+         3 DrAMP                    250000
+         4 AMP                         200
+         5 XYZ                      100000
+
+ALTER TABLE EMP
+  2  DROP COLUMN LEAVE_TAKEN;
+
+Table altered.
+
+SQL> SELECT * FROM EMP;
+
+     EMPID EMPNAME                  SALARY
+---------- -------------------- ----------
+         1 MSP                      250000
+         2 SMP                      250000
+         3 DrAMP                    250000
+         4 AMP                         200
+         5 XYZ                      100000
+
+
+
+
+
+13)DELETE CLASUE OPERATIONS: 
+
+DELETE FROM EMP WHERE EMPNAME = 'XYZ';
+
+1 row deleted.
+
+SQL> SELECT * FROM EMP;
+
+     EMPID EMPNAME                  SALARY
+---------- -------------------- ----------
+         1 MSP                      250000
+         2 SMP                      250000
+         3 DrAMP                    250000
+         4 AMP                         200
+
+DELETE FROM EMP /* ALL RECORDS IN THE TABLE WILL BE DELETED */
+
+
+
+
+14)TRUNCATE: 
+
+TRUNCATE TABLE EMP;
+
+Table truncated.
+
+SQL> SELECT * FROM EMP;
+
+no rows selected
+
+SQL> DESC EMP;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ EMPID                                              NUMBER(2)
+ EMPNAME                                            VARCHAR2(20)
+
+/* When we delete using truncate schema remains there */ 
+
+
+
+
+
+15) DROP: 
+
+DROP TABLE EMP;
+
+ DROP TABLE EMP;
+
+Table dropped.
+
+SQL> SELECT * FROM EMP;
+SELECT * FROM EMP
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+/*i.e. Whole table alogwith its schema is deleted.*/
+
+Unlike, if we use delete from emp;
+Only record will be deleted. However, structure remains same! 
+
+DELETE FROM EMP;
+
+4 rows deleted.
+
+SQL> DESC EMP;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ EMPID                                              NUMBER(2)
+ EMPNAME                                            VARCHAR2(20)
+ SALARY                                             NUMBER(10)
+
+
+ DROP TABLE EMP;
+
+Table dropped.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
